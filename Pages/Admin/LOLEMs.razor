@@ -1,0 +1,68 @@
+﻿@page "/admin/LOLEMs"
+@page "/admin"
+@inherits OwningComponentBase<ILOLEMCosmeticsRepository>
+<table class="table table-sm table-striped table-bordered">
+ <thead>
+ <tr>
+ <th>ID</th>
+ <th>Tên Sản Phẩm</th>
+ <th>Sẩn Phẩm</th>
+ <th>Giá Bán</th>
+ <td />
+ </tr>
+ </thead>
+ <tbody>
+ @if (LOLEMData?.Count() > 0)
+ {
+ @foreach (LOLEM b in LOLEMData)
+ {
+ <tr>
+ <td>@b.LOLEMID</td>
+ <td>@b.Title</td>
+ <td>@b.Genre</td>
+ <td>@b.Price.ToString("c")</td>
+ <td>
+ <NavLink class="btn btn-info btn-sm"
+ href="@GetDetailsUrl(b.LOLEMID)">
+ Details
+ </NavLink>
+ <NavLink class="btn btn-warning btn-sm"
+ href="@GetEditUrl(b.LOLEMID)">
+ Edit
+ </NavLink>
+ <button class="btn btn-danger btn-sm"
+ @onclick="@(e => DeleteLOLEM(b))">
+ Delete
+ </button>
+ </td>
+ </tr>
+ }
+ }
+ else
+ {
+ <tr>
+ <td colspan="5" class="text-center">No LOLEMs</td>
+ </tr>
+ }
+ </tbody>
+</table>
+<NavLink class="btn btn-primary" href="/admin/LOLEMs/create">Thêm Sản Phẩm</NavLink>
+@code {
+ public ILOLEMCosmeticsRepository Repository => Service;
+ public IEnumerable<LOLEM> LOLEMData { get; set; }
+ protected async override Task OnInitializedAsync()
+ {
+ await UpdateData();
+ }
+ public async Task UpdateData()
+ {
+ LOLEMData = await Repository.LOLEMs.ToListAsync();
+  }
+ public async Task DeleteLOLEM(LOLEM b)
+ {
+ Repository.DeleteLOLEM(b);
+ await UpdateData();
+ }
+ public string GetDetailsUrl(long id) => $"/admin/LOLEMs/details/{id}";
+ public string GetEditUrl(long id) => $"/admin/LOLEMs/edit/{id}";
+}

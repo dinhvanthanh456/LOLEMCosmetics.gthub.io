@@ -1,0 +1,72 @@
+﻿@page "/admin/LOLEMs/edit/{id:long}"
+@page "/admin/LOLEMs/create"
+@inherits OwningComponentBase<ILOLEMCosmeticsRepository>
+<style>
+ div.validation-message {
+ color: rgb(220, 53, 69);
+ font-weight: 500
+ }
+</style>
+<h3 class="bg-@ThemeColor text-white text-center p-1">@TitleText thêm sản phẩm LOLEM</h3>
+<EditForm Model="LOLEM" OnValidSubmit="SaveLOLEM">
+ <DataAnnotationsValidator />
+ @if (LOLEM.LOLEMID != 0)
+ {
+ <div class="form-group">
+ <label>ID</label>
+ <input class="form-control" disabled value="@LOLEM.LOLEMID" />
+ </div>
+ }
+ <div class="form-group">
+ <label>Tên Sản Phẩm</label>
+ <ValidationMessage For="@(() => LOLEM.Title)" />
+ <InputText class="form-control" @bind-Value="LOLEM.Title" />
+ </div>
+ <div class="form-group">
+ <label>Tên</label>
+ <ValidationMessage For="@(() => LOLEM.Description)" />
+ <InputText class="form-control" @bind-Value="LOLEM.Description" />
+ </div>
+ <div class="form-group">
+ <label>Sản Phẩm</label>
+ <ValidationMessage For="@(() => LOLEM.Genre)" />
+ <InputText class="form-control" @bind-Value="LOLEM.Genre" />
+ </div>
+ <div class="form-group">
+ <label>Giá</label>
+ <ValidationMessage For="@(() => LOLEM.Price)" />
+ <InputNumber class="form-control" @bind-Value="LOLEM.Price" />
+ </div>
+ <button type="submit" class="btn btn-@ThemeColor">Lưu</button>
+ <NavLink class="btn btn-secondary"
+href="/admin/products">Trể Về</NavLink>
+</EditForm>
+@code {
+ public ILOLEMCosmeticsRepository Repository => Service;
+ [Inject]
+ public NavigationManager NavManager { get; set; }
+ [Parameter]
+ public long Id { get; set; } = 0;
+ public LOLEM LOLEM { get; set; } = new LOLEM();
+ protected override void OnParametersSet()
+ {
+ if (Id != 0)
+ {
+ LOLEM = Repository.LOLEMs.FirstOrDefault(b => b.LOLEMID == Id);
+ }
+ }
+ public void SaveLOLEM()
+ {
+ if (Id == 0)
+ {
+ Repository.CreateLOLEM(LOLEM);
+ }
+ else
+ {
+ Repository.SaveLOLEM(LOLEM);
+ }
+ NavManager.NavigateTo("/admin/LOLEMs");
+ }
+ public string ThemeColor => Id == 0 ? "primary" : "warning";
+ public string TitleText => Id == 0 ? "Create" : "Edit";
+}

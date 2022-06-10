@@ -1,0 +1,19 @@
+﻿@model MyCart
+<div class="">
+    @if (Model.Lines.Count() > 0)
+    {
+    <small class="navbar-text">
+        <b>Giỏ Hàng : </b>
+        @if (Model.Lines.Sum(x => x.Quantity) >= 2)
+        {
+            <text>@Model.Lines.Sum(x => x.Quantity) Đơn Hàng  </text>
+        }
+        else
+        {
+            <text>@Model.Lines.Sum(x => x.Quantity) Đơn hàng </text>
+        }
+    </small>
+    }
+     
+    <a  href="https://localhost:44385/MyCart" class="fa fa-shopping-cart"> </a>
+</div>

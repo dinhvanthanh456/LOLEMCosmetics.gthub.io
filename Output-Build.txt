@@ -1,0 +1,8 @@
+﻿Build started...
+1>------ Build started: Project: LOLEMCosmetics, Configuration: Debug Any CPU ------
+1>D:\1234\LOLEMCosmetics\Controllers\HomeController.cs(4,7,4,31): warning CS0105: The using directive for 'Microsoft.AspNetCore.Mvc' appeared previously in this namespace
+1>D:\1234\LOLEMCosmetics\Controllers\HomeController.cs(5,7,5,28): warning CS0105: The using directive for 'LOLEMCosmetics.Models' appeared previously in this namespace
+1>LOLEMCosmetics -> D:\1234\LOLEMCosmetics\bin\Debug\netcoreapp3.1\LOLEMCosmetics.dll
+1>LOLEMCosmetics -> D:\1234\LOLEMCosmetics\bin\Debug\netcoreapp3.1\LOLEMCosmetics.Views.dll
+1>Done building project "LOLEMCosmetics.csproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
